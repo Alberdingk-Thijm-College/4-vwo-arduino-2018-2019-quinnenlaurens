@@ -9,6 +9,10 @@ int groen4 = 6;
 int buslijnBlue = 4;
 int buslijnBtn = 2;
 
+int buslijnBtnState = 0;
+int buslijnAct = 0;
+int nextSL = 0;
+
 int currentSL = 1;
 
 void setup() {
@@ -30,14 +34,25 @@ void setup() {
   pinMode(groen4, OUTPUT);
 
   // Stoplicht Buslijn
-  pinMode(buslijnBlue, OUTPUT);
   pinMode(buslijnBtn, INPUT);
-
+  Serial.begin(9600);
 }
 
 void loop() {
 
   stoplichtActivate();
+  buslijnBtnState = digitalRead(buslijnBtn);
+  
+
+  if (buslijnBtnState == HIGH) {
+    Serial.println("btn high");
+    if (buslijnAct = 0) {
+      buslijnAct = 1;
+    } else {
+      buslijnAct = 1;
+    }
+  }
+  
 }
 
 void stoplichtActivate() {
@@ -130,7 +145,12 @@ void stoplichtActivate() {
     digitalWrite(groen1, LOW);
     digitalWrite(rood1, HIGH);
 
-    currentSL = 2;
+    if (buslijnAct == 1) {
+      currentSL = 5;
+      nextSL = 3;
+    } else {
+      currentSL = 2; 
+    }
   }
 
   if (currentSL == 2) {
@@ -221,7 +241,7 @@ void stoplichtActivate() {
     digitalWrite(groen2, LOW);
     digitalWrite(rood2, HIGH);
 
-    currentSL = 3;
+      currentSL = 3; 
   }
 
   if (currentSL == 3) {
@@ -312,7 +332,12 @@ void stoplichtActivate() {
     digitalWrite(groen3, LOW);
     digitalWrite(rood3, HIGH);
 
-    currentSL = 4;
+    if (buslijnAct == 1) {
+      currentSL = 5;
+      nextSL = 4;
+    } else {
+      currentSL = 4; 
+    }
   }
 
   if (currentSL == 4) {
@@ -403,7 +428,111 @@ void stoplichtActivate() {
     digitalWrite(groen4, LOW);
     digitalWrite(rood3, HIGH);
 
-    currentSL = 1;
+    if (buslijnAct == 1) {
+      currentSL = 5;
+      nextSL = 1;
+    } else {
+      currentSL = 1; 
+    }
+  }
+
+  if (currentSL == 5) {
+
+    digitalWrite(groen2, HIGH);
+    digitalWrite(rood1, HIGH);
+    digitalWrite(rood2, LOW);
+    digitalWrite(rood3, HIGH);
+    digitalWrite(rood4, HIGH);
+    delay(10000);
+  
+    digitalWrite(groen2, LOW);
+    delay(1000);
+    digitalWrite(groen2, HIGH);
+    delay(1000);
+    digitalWrite(groen2, LOW);
+    delay(500);
+    digitalWrite(groen2, HIGH);
+    delay(500);
+    digitalWrite(groen2, LOW);
+    delay(500);
+    digitalWrite(groen2, HIGH);
+    delay(500);
+    digitalWrite(groen2, LOW);
+    delay(250);
+    digitalWrite(groen2, HIGH);
+    delay(250);
+    digitalWrite(groen2, LOW);
+    delay(250);
+    digitalWrite(groen2, HIGH);
+    delay(250);
+    digitalWrite(groen2, LOW);
+    delay(250);
+    digitalWrite(groen2, HIGH);
+    delay(250);
+    digitalWrite(groen2, LOW);
+    delay(250);
+    digitalWrite(groen2, HIGH);
+    delay(250);
+    digitalWrite(groen2, LOW);
+    delay(100);
+    digitalWrite(groen2, HIGH);
+    delay(100);
+    digitalWrite(groen2, LOW);
+    delay(100);
+    digitalWrite(groen2, HIGH);
+    delay(100);
+    digitalWrite(groen2, LOW);
+    delay(100);
+    digitalWrite(groen2, HIGH);
+    delay(100);
+    digitalWrite(groen2, LOW);
+    delay(100);
+    digitalWrite(groen2, HIGH);
+    delay(100);
+    digitalWrite(groen2, LOW);
+    delay(50);
+    digitalWrite(groen2, HIGH);
+    delay(50);
+    digitalWrite(groen2, LOW);
+    delay(50);
+    digitalWrite(groen2, HIGH);
+    delay(50);
+    digitalWrite(groen2, LOW);
+    delay(50);
+    digitalWrite(groen2, HIGH);
+    delay(50);
+    digitalWrite(groen2, LOW);
+    delay(50);
+    digitalWrite(groen2, HIGH);
+    delay(50);
+    digitalWrite(groen2, LOW);
+    delay(50);
+    digitalWrite(groen2, HIGH);
+    delay(50);
+    digitalWrite(groen2, LOW);
+    delay(50);
+    digitalWrite(groen2, HIGH);
+    delay(50);
+    digitalWrite(groen2, LOW);
+    delay(50);
+    digitalWrite(groen2, HIGH);
+    delay(50);
+    digitalWrite(groen2, LOW);
+    delay(50);
+    digitalWrite(groen2, HIGH);
+    delay(50);
+
+    digitalWrite(groen2, LOW);
+    digitalWrite(rood2, HIGH);
+
+    if (nextSL == 1) {
+      currentSL = 1;
+    } else if (nextSL == 4) {
+      currentSL = 4;
+    } else if (nextSL == 3) {
+      currentSL = 3;
+    }
+    
   }
   
 }
