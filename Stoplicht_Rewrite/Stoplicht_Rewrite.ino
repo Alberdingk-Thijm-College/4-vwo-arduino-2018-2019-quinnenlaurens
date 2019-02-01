@@ -49,44 +49,57 @@ void setup() {
 
 }
 
+// De loop
 void loop() {
 
+  // Stoplicht 1
   buslijnBtnState = digitalRead(buslijnBtn);
   vgBtnState = digitalRead(vgBtn);
   if (buslijnBtnState == HIGH || buslijnAct == 1) {
     sl2();
+    buslijnAct = 0;
   } else if (vgBtnState == HIGH || vgAct == 1) {
     vgSl();
+    vgAct = 0;
   } else {
     sl1();
   }
 
+  // stoplicht 2
   buslijnBtnState = digitalRead(buslijnBtn);
   vgBtnState = digitalRead(vgBtn);
   if (buslijnBtnState == HIGH || buslijnAct == 1) {
     sl2();
+    buslijnAct = 0;
   } else if (vgBtnState == HIGH || vgAct == 1) {
     vgSl();
+    vgAct = 0;
   } else {
     sl2();
   }
 
+  // stoplicht 3
   buslijnBtnState = digitalRead(buslijnBtn);
   vgBtnState = digitalRead(vgBtn);
   if (buslijnBtnState == HIGH || buslijnAct == 1) {
     sl2();
+    buslijnAct = 0;
   } else if (vgBtnState == HIGH || vgAct == 1) {
     vgSl();
+    vgAct = 0;
   } else {
     sl3();
   }
 
+  // stoplicht 4
   buslijnBtnState = digitalRead(buslijnBtn);
   vgBtnState = digitalRead(vgBtn);
   if (buslijnBtnState == HIGH || buslijnAct == 1) {
     sl2();
+    buslijnAct = 0;
   } else if (vgBtnState == HIGH || vgAct == 1) {
     vgSl();
+    vgAct = 0;
   } else {
     sl4();
   }
@@ -95,8 +108,9 @@ void loop() {
 
 void wait(int secs) {
 
-  if (i <= secs) {
+  for (int i = 0; i <= secs; i++) {
     buslijnBtnState = digitalRead(buslijnBtn);
+    // Leest of de buslijn knop is ingedrukt.
     if (buslijnBtnState == HIGH) {
       if (buslijnAct == 0) {
         buslijnAct = 1;
@@ -107,6 +121,7 @@ void wait(int secs) {
       }
     }
     vgBtnState = digitalRead(vgBtn);
+    // Leest of de voetgangers knop is ingedrukt. 
     if (vgBtnState == HIGH) {
       if (vgAct == 0) {
         vgAct = 1;
@@ -116,18 +131,20 @@ void wait(int secs) {
         Serial.println("Voetgangers is geactiveerd!");
       }
     }
-    
-    i++;
     delay(1);
-  } else {
-    secs = 0;
-    i = 0;
-  }
+  } 
+  secs = 0;
 }
 
+
+// stoplicht 1
 void sl1(){
 
   digitalWrite(rood1, LOW);
+  digitalWrite(rood2, HIGH);
+  digitalWrite(rood3, HIGH);
+  digitalWrite(rood4, HIGH);
+  digitalWrite(vgRood, HIGH);
   digitalWrite(groen1, HIGH);
   wait(10000);
   digitalWrite(groen1, LOW);
@@ -148,9 +165,14 @@ void sl1(){
   
 }
 
+// stoplicht 2
 void sl2(){
 
+  digitalWrite(rood1, HIGH);
   digitalWrite(rood2, LOW);
+  digitalWrite(rood3, HIGH);
+  digitalWrite(rood4, HIGH);
+  digitalWrite(vgRood, HIGH);
   digitalWrite(groen2, HIGH);
   wait(10000);
   digitalWrite(groen2, LOW);
@@ -171,9 +193,14 @@ void sl2(){
   
 }
 
+// stoplicht 3
 void sl3(){
 
+  digitalWrite(rood1, HIGH);
+  digitalWrite(rood2, HIGH);
   digitalWrite(rood3, LOW);
+  digitalWrite(rood4, HIGH);
+  digitalWrite(vgRood, HIGH);
   digitalWrite(groen3, HIGH);
   wait(10000);
   digitalWrite(groen3, LOW);
@@ -194,9 +221,14 @@ void sl3(){
   
 }
 
+// stoplicht 4
 void sl4(){
 
+  digitalWrite(rood1, HIGH);
+  digitalWrite(rood2, HIGH);
+  digitalWrite(rood3, HIGH);
   digitalWrite(rood4, LOW);
+  digitalWrite(vgRood, HIGH);
   digitalWrite(groen4, HIGH);
   wait(10000);
   digitalWrite(groen4, LOW);
@@ -217,8 +249,13 @@ void sl4(){
   
 }
 
+// voetgangers stoplicht
 void vgSl(){
 
+  digitalWrite(rood1, HIGH);
+  digitalWrite(rood2, HIGH);
+  digitalWrite(rood3, HIGH);
+  digitalWrite(rood4, HIGH);
   digitalWrite(vgRood, LOW);
   digitalWrite(vgGroen, HIGH);
   wait(10000);
